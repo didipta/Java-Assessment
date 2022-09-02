@@ -16,8 +16,16 @@ public class Bank {
     //Add account
     public void addaccount(Account account)
     {
-        this.accounts.add(account);
-        System.out.println("Account is Successfully Registered");
+        if (Searchaccount(account.getId())==null)
+        {
+            this.accounts.add(account);
+            System.out.println("Account is Successfully Registered");
+        }
+        else
+        {
+            System.out.println("Already Same id is there");
+        }
+
     }
     //Add transaction
     public void addtransaction(Transaction transaction)
@@ -66,7 +74,7 @@ public class Bank {
             int previousamount=account.getAmount();
             account.setAmount((previousamount+amount));
             System.out.println("Amount is Successfully Deposite");
-            Transaction transaction=new Transaction(i,account.getId(),"Depositeamount",amount);
+            Transaction transaction=new Transaction(i,account.getId(),000,"Depositeamount",amount);
             addtransaction(transaction);
         }
         else
@@ -93,7 +101,7 @@ public class Bank {
                 System.out.println("-------------------------");
                 System.out.println("Amount is Successfully withdraw");
                 System.out.println("----------------------------");
-                Transaction transaction=new Transaction(i,account.getId(),"Withdrawamount",amount);
+                Transaction transaction=new Transaction(i,account.getId(),00000,"Withdrawamount",amount);
                 addtransaction(transaction);
             }
             else
@@ -126,7 +134,7 @@ public class Bank {
                 System.out.println("-------------------------");
                 System.out.println("Successfully Send the money");
                 System.out.println("----------------------------");
-                Transaction transaction=new Transaction(i,account2.getId(),"Sendmoney",amount);
+                Transaction transaction=new Transaction(i,account1.getId(),account2.getId(),"Sendmoney",amount);
                 addtransaction(transaction);
             }
             else
@@ -161,15 +169,19 @@ public class Bank {
       }
     }
 
-    public void Showtransaction()
+    public void Showtransaction(int id)
     {
         if(transactions.size()!=0)
         {
             for(Transaction T:transactions)
             {
-                System.out.println("-------------------");
-                T.Showdetails();
-                System.out.println("------------------");
+                if(T.getUser_id()==id || T.getSender_id()==id)
+                {
+                    System.out.println("-------------------");
+                    T.Showdetails();
+                    System.out.println("------------------");
+                }
+
             }
         }
         else
